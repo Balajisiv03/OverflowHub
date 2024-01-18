@@ -1,0 +1,82 @@
+.main-nav{
+    min-height: 50px;
+    width: 100%;
+    margin: 0% auto;
+    border-top: solid 3px #ef8236;
+    box-shadow: 0px 1px 5px #00000033;
+    top: 0%;
+    left: 0%;
+    position: fixed;
+    z-index: 5;
+    background-color: #f8f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar{
+    height: 100%;
+    min-width: 85%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo{
+    padding: 5px 20px;
+}
+
+.nav-item{
+    margin: 0px 5px;
+    text-decoration: none;
+    font-size: small;
+    font-weight: 600;
+    color: rgb(69,69,69);
+    transition: 0.2s;
+}
+
+.nav-btn{
+    cursor: pointer;
+    border-radius: 30px;
+    padding: 10px 30px;
+}
+
+.nav-item:hover{
+    background-color: rgb(227, 227, 227);
+}
+
+.navbar form{
+    flex-grow: 1;
+    position: relative;
+    padding: 10px 10px;
+   
+}
+
+.navbar form input{
+    min-width: 90%;
+    margin: 0px 70px 0 10px;
+    padding: 8px 10px 8px 22px;
+    font-size: 13px;
+    border: solid 1px #0000003e;
+    border-radius: 3px;
+
+}
+
+.navbar form .search-icon{
+    position: absolute;
+    top: 18px;
+    left: 23px;
+}
+
+.nav-links{
+    padding: 5px 15px;
+    margin: 10px 30px;
+    border: solid 1px blue;
+    border-radius: 5px;
+    background-color: #e7f8fe;
+    cursor: pointer;
+}
+
+.nav-links:hover{
+    background-color: #e4e6e6;
+}
