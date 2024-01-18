@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import users from '../routes/users.js'
+import users from '../models/auth.js'
 
 export const signup = async(req,res)=>{
    const {name,email,password}=req.body;
@@ -15,7 +15,7 @@ export const signup = async(req,res)=>{
       res.status(200).json({result:newUser,token})
    }
    catch(error){
-       res.status(500).json("Something went wrong")
+       res.status(500).json("Something went wrong");
    }
 }
 
@@ -30,8 +30,8 @@ export const login = async(req,res)=>{
        if(!isPasswordCrt){
         return res.status(404).json({message:"Invalid Credentials"})
        }
-       const token=jwt.sign({email: newUser.email,id:newUser._id},"test",{expiresIn:'1h'});
-       return res.status(200).json({result:newUser,token})
+       const token=jwt.sign({email: existinguser.email,id: existinguser._id},"test",{expiresIn:'1h'});
+       return res.status(200).json({result:existinguser,token})
     }
     catch(error){
         res.status(500).json("Something went wrong")
