@@ -8,14 +8,16 @@ export const signup = async(req,res)=>{
       const existinguser= await users.findOne({email});
       if(existinguser){
         return res.status(404).json({message:"User Already Exist."})
+        console.log(existinguser);
       }
       const hashedPassword=await bcrypt.hash(password,12)
-      const newUser=await users.create({name,email,passowrd:hashedPassword})
+      const newUser=await users.create({name,email,password:hashedPassword})
       const token=jwt.sign({email: newUser.email,id:newUser._id},"test",{expiresIn:'1h'});
       res.status(200).json({result:newUser,token})
    }
    catch(error){
        res.status(500).json("Something went wrong");
+       console.log(error);
    }
 }
 

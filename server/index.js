@@ -2,13 +2,14 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
 import userRoutes from './routes/users.js';
+import questionRoutes from './routes/Questions.js';
 
 const app=express();
 app.use(express.json({limit: "30mb",extended: true}))
 app.use(express.urlencoded({limit: "30mb",extended: true}))
 app.use(cors());
-
 app.use('/user',userRoutes);
+app.use('/questions',questionRoutes);
 
 app.get("/",(req,res)=>{
     res.send("this is stack overflow  clone api")
