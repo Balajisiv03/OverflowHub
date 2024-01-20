@@ -15,6 +15,8 @@ app.get("/",(req,res)=>{
     res.send("this is stack overflow  clone api")
 })
 
+
+
 const PORT = process.env.PORT || 5000
 
 // const CONNECTION_URL="mongodb+srv://admin:admin@stack-overflow-clone.fgqn0.mongodb.net/?retryWrites=true&w=majority";
