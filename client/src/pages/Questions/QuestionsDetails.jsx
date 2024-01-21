@@ -1,12 +1,16 @@
 import React,{useState} from 'react'
-import {useParams,Link,useNavigate} from 'react-router-dom'
+import {useParams,Link,useNavigate,useLocation} from 'react-router-dom'
+import moment from 'moment'
+import {useSelector,useDispatch} from 'react-redux'
+import {postAnswer} from '../../actions/question'
+import copy from 'copy-to-clipboard'
+
 import upVotes from '../../assets/sort-up.svg'
 import downVotes from '../../assets/sort-down.svg'
 import './Questions.css'
 import Avatar from '../../components/Avatar/Avatar' 
 import DisplayAnswers from './DisplayAnswers'
-import {useSelector,useDispatch} from 'react-redux'
-import {postAnswer} from '../../actions/question'
+
 const QuestionsDetails = () => {
     const {id}=useParams();
 
@@ -69,6 +73,8 @@ const QuestionsDetails = () => {
     const [Answer,setAnswer]=useState("");
     const Navigate=useNavigate();
     const dispatch=useDispatch();
+    const location=useLocation();
+    const url='http://localhost:3000';
     const User=useSelector((state)=>state.currentUserReducer);
     const handlePostAns=(e,answerLength)=>{
          e.preventDefault();
@@ -86,6 +92,11 @@ const QuestionsDetails = () => {
          }   
     }
     
+
+    const handleShare=()=>{
+         copy(url+location.pathname);
+         alert('Copied URL:'+url+location.pathname)
+    }
   return (
     <div className="question-details-page">
        {
@@ -113,11 +124,11 @@ const QuestionsDetails = () => {
                                 </div>
                                 <div className="question-actions-user">
                                     <div>
-                                        <button type="button" >Share</button>
+                                        <button type="button" onClick={handleShare} >Share</button>
                                         <button type="button" >Delete</button>
                                     </div>
                                     <div>
-                                        <p>asked {question.askedOn}</p>
+                                        <p>asked {moment(question.askedOn).fromNow()}</p>
                                         <Link to={`/User/${question.userId}`} className="user-link" style={{color: '#008638'}}>
                                             <Avatar backgroundColor="orange" px='8px' py='5px'>{question.userPosted.charAt(0).toUpperCase()}</Avatar>
                                             <div>
@@ -131,7 +142,7 @@ const QuestionsDetails = () => {
                        {question.noOfAnswers!==0 && (
                             <section>
                                 <h3>{question.noOfAnswers}</h3>
-                                <DisplayAnswers key={question._id} question={question}/>
+                                <DisplayAnswers key={question._id} question={question} handleShare={handleShare}/>
                             </section>  
                         )}
                         <section className="post-ans-container">
