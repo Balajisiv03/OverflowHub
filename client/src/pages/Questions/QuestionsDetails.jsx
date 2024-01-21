@@ -1,12 +1,12 @@
-import React from 'react'
-import {useParams,Link} from 'react-router-dom'
+import React,{useState} from 'react'
+import {useParams,Link,useNavigate} from 'react-router-dom'
 import upVotes from '../../assets/sort-up.svg'
 import downVotes from '../../assets/sort-down.svg'
 import './Questions.css'
 import Avatar from '../../components/Avatar/Avatar' 
 import DisplayAnswers from './DisplayAnswers'
-import {useSelector} from 'react-redux'
-
+import {useSelector,useDispatch} from 'react-redux'
+import {postAnswer} from '../../actions/question'
 const QuestionsDetails = () => {
     const {id}=useParams();
 
@@ -65,6 +65,26 @@ const QuestionsDetails = () => {
     //       userId: 2
     //     }]
     //   }]   
+  
+    const [Answer,setAnswer]=useState("");
+    const Navigate=useNavigate();
+    const dispatch=useDispatch();
+    const User=useSelector((state)=>state.currentUserReducer);
+    const handlePostAns=(e,answerLength)=>{
+         e.preventDefault();
+         if(User===null){
+            alert("login or signup to answer a question")
+            Navigate('/');
+         }
+         else{
+             if(Answer === ''){
+                alert("enter an answer before submitting")
+             }
+             else{
+                dispatch(postAnswer({id,noOfAnswers: answerLength+1,answerBody: Answer,userAnswered: User.result.name}))
+             }
+         }   
+    }
     
   return (
     <div className="question-details-page">
@@ -116,8 +136,8 @@ const QuestionsDetails = () => {
                         )}
                         <section className="post-ans-container">
                             <h3>Your Answer</h3>
-                            <form>
-                                <textarea name="" id="" cols="30" rows="10"></textarea><br/>
+                            <form onSubmit={(e)=>{handlePostAns(e,question.answer.length)}}>
+                                <textarea name="" id="" cols="30" rows="10" onChange={e=>setAnswer(e.target.value)}></textarea><br/>
                                 <input type="submit" className="post-ans-btn" value="post your answer"/>
                             </form>
                             <p>Browse other question tagged 
