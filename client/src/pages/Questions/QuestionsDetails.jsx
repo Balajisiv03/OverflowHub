@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {useParams,Link,useNavigate,useLocation} from 'react-router-dom'
 import moment from 'moment'
 import {useSelector,useDispatch} from 'react-redux'
-import {postAnswer} from '../../actions/question'
+import {postAnswer,deleteQuestion} from '../../actions/question'
 import copy from 'copy-to-clipboard'
 
 import upVotes from '../../assets/sort-up.svg'
@@ -75,7 +75,9 @@ const QuestionsDetails = () => {
     const dispatch=useDispatch();
     const location=useLocation();
     const url='http://localhost:3000';
+   
     const User=useSelector((state)=>state.currentUserReducer);
+    
     const handlePostAns=(e,answerLength)=>{
          e.preventDefault();
          if(User===null){
@@ -87,7 +89,7 @@ const QuestionsDetails = () => {
                 alert("enter an answer before submitting")
              }
              else{
-                dispatch(postAnswer({id,noOfAnswers: answerLength+1,answerBody: Answer,userAnswered: User.result.name}))
+                dispatch(postAnswer({id,noOfAnswers: answerLength+1,answerBody: Answer,userAnswered: User.result.name,userId:User.result._id}))
              }
          }   
     }
@@ -97,6 +99,11 @@ const QuestionsDetails = () => {
          copy(url+location.pathname);
          alert('Copied URL:'+url+location.pathname)
     }
+
+    const handleDelete=()=>{
+        dispatch(deleteQuestion(id,Navigate));
+    }
+
   return (
     <div className="question-details-page">
        {
@@ -125,7 +132,12 @@ const QuestionsDetails = () => {
                                 <div className="question-actions-user">
                                     <div>
                                         <button type="button" onClick={handleShare} >Share</button>
-                                        <button type="button" >Delete</button>
+                                        {
+                                            User.result._id===question.userId && (
+                                                <button type="button" onClick={handleDelete}>Delete</button>
+                                         )
+                                        }
+                                        
                                     </div>
                                     <div>
                                         <p>asked {moment(question.askedOn).fromNow()}</p>
