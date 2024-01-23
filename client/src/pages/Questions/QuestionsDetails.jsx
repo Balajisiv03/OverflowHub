@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {useParams,Link,useNavigate,useLocation} from 'react-router-dom'
 import moment from 'moment'
 import {useSelector,useDispatch} from 'react-redux'
-import {postAnswer,deleteQuestion} from '../../actions/question'
+import {postAnswer,deleteQuestion,voteQuestion} from '../../actions/question'
 import copy from 'copy-to-clipboard'
 
 import upVotes from '../../assets/sort-up.svg'
@@ -104,6 +104,14 @@ const QuestionsDetails = () => {
         dispatch(deleteQuestion(id,Navigate));
     }
 
+    const handleUpVote=()=>{
+       dispatch(voteQuestion(id,'upvote',User.result._id));
+    }
+
+    const handleDownVote=()=>{
+        dispatch(voteQuestion(id,'downvote',User.result._id));
+    }
+
   return (
     <div className="question-details-page">
        {
@@ -117,9 +125,9 @@ const QuestionsDetails = () => {
                             <h1>{question.questionTitle}</h1>
                             <div className="question-details-container-2">
                                 <div className="question-votes">
-                                    <img src={upVotes} width="18" alt="img" className="votes-icon"/>
-                                    <p>{question.upVotes-question.downVotes}</p>
-                                    <img src={downVotes} width="18" alt="img" className="votes-icon"/>
+                                    <img src={upVotes} width="18" alt="img" className="votes-icon" onClick={handleUpVote}/>
+                                    <p>{question.upVote.length-question.downVote.length}</p>
+                                    <img src={downVotes} width="18" alt="img" className="votes-icon" onClick={handleDownVote}/>
                                 </div>
                                 <div style={{width:"100%"}}> 
                                     <p className="question-body">{question.questionBody}</p>
@@ -153,7 +161,7 @@ const QuestionsDetails = () => {
                        </section>
                        {question.noOfAnswers!==0 && (
                             <section>
-                                <h3>{question.noOfAnswers}</h3>
+                                <h3>No of answers: {question.noOfAnswers}</h3>
                                 <DisplayAnswers key={question._id} question={question} handleShare={handleShare}/>
                             </section>  
                         )}
