@@ -54,7 +54,7 @@ export const voteQuestion=async(req,res)=>{
                   if(downIndex!==-1){
                     question.downVote=question.downVote.filter((id)=>id!==String(userId));
                   }
-                  if(upIndex==-1){
+                  if(upIndex===-1){
                     question.upVote.push(userId);        
                   }
                   else{

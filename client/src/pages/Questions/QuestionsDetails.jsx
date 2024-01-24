@@ -105,11 +105,11 @@ const QuestionsDetails = () => {
     }
 
     const handleUpVote=()=>{
-       dispatch(voteQuestion(id,'upvote',User.result._id));
+       dispatch(voteQuestion(id,'upVote',User.result._id));
     }
 
     const handleDownVote=()=>{
-        dispatch(voteQuestion(id,'downvote',User.result._id));
+        dispatch(voteQuestion(id,'downVote',User.result._id));
     }
 
   return (
