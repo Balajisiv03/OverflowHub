@@ -10,7 +10,7 @@
 
 .auth-container-1{
     padding: 20px;
-    margin-right: 30px; 
+    margin-right: 220px; 
 }
 
 .login-logo{
@@ -22,10 +22,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 80px;
 }
 
 .auth-container-2 form{
-    width: 100%;
+    width: 150%;
     background-color: white;
     border-radius: 10px;
     padding: 20px;
